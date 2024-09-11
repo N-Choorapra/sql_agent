@@ -24,8 +24,8 @@ class AsyncSQLAdapter(AsyncOpenAI):
         super().__init__(*args, **kwargs)
 
         _yaml = YAML()
-        _table_definitions_path = os.path.join("..", "config", "table_definitions.yaml")
-        _db_config_path = os.path.join("..", "config", "db_config.yaml")
+        _table_definitions_path = os.path.join("config", "table_definitions.yaml")
+        _db_config_path = os.path.join("config", "db_config.yaml")
 
         
         with open(_table_definitions_path, "r") as f:
