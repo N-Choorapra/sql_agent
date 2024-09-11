@@ -266,8 +266,8 @@ class SQLAdapter(OpenAI):
         super().__init__(*args, **kwargs)
 
         _yaml = YAML()
-        _table_definitions_path = os.path.join("..", "config", "table_definitions.yaml")
-        _db_config_path = os.path.join("..", "config", "db_config.yaml")
+        _table_definitions_path = os.path.join("config", "table_definitions.yaml")
+        _db_config_path = os.path.join("config", "db_config.yaml")
         # _table_definitions_path = os.path.join("config", "table_definitions.yaml")
         # _db_config_path = os.path.join("config", "db_config.yaml")
 
@@ -491,8 +491,8 @@ class SQLAdapter(OpenAI):
         print(sql_generated)
         value_from_source = self.fetch_value(sql_query= sql_generated)
         if not value_from_source.empty:
-            with open("../logs/qandquery.jsonl", "a") as f:
-            # with open("./logs/qandquery.jsonl", "a") as f:
+            # with open("../logs/qandquery.jsonl", "a") as f:
+            with open("./logs/qandquery.jsonl", "a") as f:
                 f.write(json.dumps({user_query:sql_generated}) + "\n")
 
         return value_from_source
