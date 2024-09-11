@@ -9,7 +9,7 @@ if 'chat_history' not in st.session_state:
 
 st.header("Client APP Chatbot")
 from adapters.sql_adapter import SQLAdapter
-OPENAI_API_KEY = OPENAI_API_KEY
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 st.session_state.sql_adapter = SQLAdapter(api_key=OPENAI_API_KEY)
 current_user = st.sidebar.selectbox(
     "USER",
