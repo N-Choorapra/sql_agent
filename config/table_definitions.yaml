@@ -1,0 +1,163 @@
+version: 3.0
+
+tables:
+  ShareClassPerformance:
+    table_description: This table hosts the details about different mandates tracked
+      quarterwise for each year. The tracking of each market value end in each quarter.
+      Total market values are only calculated quarterwise. If the user is looking
+      for aggregate values, they should be calculated in a single quarter, not between
+      quarters.. The value ISIN is associated with ISIN in the table DealPriceUpdate
+    fields:
+      PK_ShareClassPerformance: int
+      MandateId: int
+      Year: int
+      Quarter: int
+      ISIN: varchar
+      MarketValue: float
+      BookValue: float
+      DistributionAmount: float
+      NetChangePercent: float
+      NetChangePercentDirection: varchar
+      PriceDate: date
+      PerformanceContribution: float
+      Multiple: float
+      NetChangeMoney: float
+      ValueStart: float
+      ValueEnd: float
+      GainsLosses: float
+      ReturnOfCapital: float
+      Income: float
+      Shares: float
+      ITDBookValue: float
+      IRR: float
+      SourceExtractionDate: date
+  DealInformation:
+    description: This table has all the informations regarding the deals including
+      deal names deal origin etc. The value DealId is associated with DealId in table
+      DealPriceUpdate
+    fields:
+      PK_DealInformation: int
+      DealId: int
+      Region: nvarchar
+      Country: nvarchar
+      DealName: nvarchar
+      Description: nvarchar
+      Strategy: varchar
+      BrochureDescription: nvarchar
+      Sponsor: nvarchar
+      ExpectedExitYear: int
+      ExpectedReturn: nvarchar
+      IsShariah: bit
+      StartDate: date
+      ClosingDate: date
+      SourceExtractionDate: date
+      ExpectedYield: float
+  DealPriceUpdate:
+    description: This table has the informations about the dealds pointing to other
+      tables and ISINs which points to some other tables
+    fields:
+      PK_DealPriceUpdate: int
+      DealId: int
+      ISIN: varchar
+      Quote: float
+      QuoteDate: datetime
+      PreviousQuote: float
+      PreviousQuoteDate: datetime
+      SourceExtractionDate: date
+  Holdings:
+    description: Table with the holdings and their values, strategies involved, the
+      categories the fund is distributed etc. Category = Total in a quarter is equals
+      to the total holdings(AUM) of the mandate. To look for AUM or holdings or investments, or Strategy value,
+      funds with only Category = Total and Strategy = 'strategy of interest' should be taken. For further distribution of Strategy, values other than Category = 'Total' is considered. No calculation are allowed by Mixing Category = 'Total' and Category <> 'Total'.
+    fields:
+      PK_Holdings: int
+      MandateId: int
+      Year: int
+      Quarter: int
+      Strategy:
+        dtype: varchar
+        allowed:
+          - Cash in Transit
+          - Liquid
+          - Illiquid
+      Category:
+        dtype: varchar
+        allowed:
+        - Yielding Investments
+        - Equities
+        - Other
+        - Fixed Income
+        - Alternative Investments
+        - Real Estate Investments
+        - Total
+        - Private Equity Investments
+      Value: float
+      SourceExtractionDate: date
+  CashflowDetail:
+    description: Table with the distribution amount, their types and the date of dictribution
+      for different funds and deals
+    fields:
+      PK_CashFlowDetail: int
+      MandateId: int
+      FundId: int
+      DealId: int
+      DistributionDate: date
+      DistributionType:
+        dtype: nvarchar
+        allowed:
+          - CapitalGain
+          - CapitalReturn
+          - IncomeDistribution
+      DistributionAmount: float
+      SourceExtractionDate: date
+  AccountSummary:
+    description: This is the table where the IRR value of the mandate(Client of interest)
+      is stored
+    fields:
+      PK_AccountSummary: int
+      MandateId: int
+      ValuationDateId: int
+      AUM: float
+      IRR: float
+      IRRdirection: varchar
+      CashFlowTotal: float
+      NetChangeTotal: float
+      YTDgrowth: float
+      ITDgrowth: float
+      AnnualizedGrowth: float
+      MWRgrowth: float
+      PerformanceChartValues: nvarchar
+      NumberOfDeals: int
+      CommitmentsTotalAmount: float
+      SourceExtractionDate: date
+  OpenInvestment:
+    description: The data about all deals available is stored here. ConvShareClassId is the Actual ID of the deals. And the names of the deals are available in ShareClass table. Future or open
+      deals are the deals whose EndDate is greater than current date. Only use the EndDate and ConvShareClassId from this table when generating queries, no other field is useful. The field ConvShareClassId is directly associated with the field ShareClassId in ShareClass table. For future investment details only look in this table and ShareClass table. This table has nothing to do with the MandateId.
+    fields:
+      OpenInvestmentId: int
+      OpenInvestmentType: nvarchar
+      InvestmentId: int
+      PublishStatusId: int
+      SharShareclassId: int
+      StartDate: date
+      EndDate: date
+      ConvShareclassId: int
+      CreatedBy: nvarchar
+      MinimumInvestment: float
+      MaximumInvestment: float
+      MOIC: nvarchar
+      IRR: nvarchar
+      Shariah: bit
+      SourceExtractionDate: date
+  ShareClass:
+    description: The names of the deals with ShareClassId is stored here. The ShareClassId
+      is directly associated with the ConvShareClassId of table OpenInvestment. This table has nothing to do with the MandateId. This stores general investments available to all mandates.
+    fields:
+      PK_ShareClass: int
+      ShareClassId: int
+      ISIN: varchar
+      DealId: int
+      FundId: int
+      Name: varchar
+      Type: varchar
+      SourceExtractionDate: date

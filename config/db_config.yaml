@@ -1,0 +1,8 @@
+version: 3
+
+db_config:
+  user: CdrBotUser
+  password: s2hG67klu!
+  host: tfo-az-stg-clientapp-sqlsrv-001.database.windows.net
+  port: 3306
+  database: tfo-az-stg-clientapp-sqldb-001

@@ -1,0 +1,19 @@
+TWR - Time weighted return
+[ITD, YTD, Annualized, Quarterly]
+IRR - internal rate of return
+
+Queries:
+what is my AUM for last year or Quarter or YEAR or Deal level or SPV level? What is the NET change ?
+what is my performance as per ITD or YTD or Annualized  and what is my IRR?
+what is my cashflow as per  ITD or YTD or Quarterly  
+what is my commitment / Called or Uncalled?  as per SPV- Aggregate of the money that is pending to be called.
+Which is the best and worst performance deal in my portfolio?
+what is liquidity of my portfolio?
+what are the new investment opportunity?
+
+
+
+AUM:-
+Table: Holdings
+Strategies [Cash in Transit, Liquid, Illiquid]
+Category []
