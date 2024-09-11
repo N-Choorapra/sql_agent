@@ -40,7 +40,7 @@ def handle_input():
             
         except Exception as e:
             print(e)
-            st.session_state.chat_history.append(("Bot", f"Sorry. we couldn't find what you are looking for. Please rephrase the question with more information."))
+            st.session_state.chat_history.append(("Bot", f"Sorry. we couldn't find what you are looking for. Please rephrase the question with more information. {e}"))
         st.session_state.query = ""
 
 
